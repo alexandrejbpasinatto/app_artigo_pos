@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="templates/main.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="body">
+
+        <p:panel>
+            <h:form id="frm">
+                <p:dialog widgetVar="dlgUsuario" header="Usuário"  focus="Login">
+                    <h:panelGrid columns="2" id="dlgUsuarioDisplay">
+                        <h:outputLabel value="Codigo" />
+                        <h:inputHidden value="#{usuarioMB.usuario.ID}">
+                             <p:outputLabel value="#{usuarioMB.usuario.ID}"/>
+                        </h:inputHidden>
+                       
+                       
+                        <h:outputLabel for="Login" value="Login"/>
+                        <p:inputText value="#{usuarioMB.usuario.login}" id="Login"/>
+
+                        <h:outputLabel for="Senha" value="Senha"/>
+                        <p:inputText value="#{usuarioMB.usuario.senha}" id="Senha"/>
+
+                        <p:commandButton value="Limpar" type="reset" />
+                        <p:commandButton action="#{usuarioMB.salveOrUpdate()}" 
+                                         value="Salvar" 
+                                         oncomplete="PF('dlgUsuario').hide();"
+                                         update="frm:listUsuarios"/>
+                    </h:panelGrid>
+                </p:dialog>
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+
+                        <p:commandButton title="Novo" value="Novo Usuário" icon="ui-icon-plus" 
+                                         action="#{usuarioMB.novo}"
+                                         onclick="PF('dlgUsuario').show();" 
+                                         update="frm:dlgUsuarioDisplay" 
+                                         />
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable var="usuarios"
+                             value="#{usuarioMB.usuarios}" 
+                             id="listUsuarios"
+                             emptyMessage="Nenhum registro encontrado">
+
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{usuarios.ID}"/>
+                    </p:column>
+                    <p:column headerText="Login">
+                        <h:outputText value="#{usuarios.login}"/>
+                    </p:column>
+                    <p:column headerText="Senha">
+                        <h:outputText value="#{usuarios.senha}"/>
+                    </p:column>
+
+                    <p:column style="width:32px">
+                        <p:commandButton icon="ui-icon-closethick" 
+                                         action="#{usuarioMB.excluir(usuarios)}"
+                                        update="frm:listUsuarios" process="@this" >
+                            <p:confirm header="Deletar" 
+                                       message="Tem certeza que deseja excluir o registro?" 
+                                       icon="ui-icon-alert" />
+                            <p:ajax />
+                        </p:commandButton>
+                    </p:column>
+
+                    <p:column style="width:40px">
+                        <p:commandButton  icon="ui-icon-pencil" 
+                                          onclick="PF('dlgUsuario').show();" 
+                                         update="frm:dlgUsuarioDisplay"  
+                                          >
+                            <f:setPropertyActionListener  target="#{usuarioMB.usuario}" value="#{usuarios}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sim" 
+                                     type="button" 
+                                     styleClass="ui-confirmdialog-yes" 
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button" 
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+
