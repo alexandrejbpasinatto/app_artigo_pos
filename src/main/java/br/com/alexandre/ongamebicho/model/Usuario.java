@@ -55,5 +55,10 @@ public class Usuario implements Serializable{
     public void setID(Long ID) {
         this.ID = ID;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "ID=" + ID + ", login=" + login + ", senha=" + senha + '}';
+    }
     
 }

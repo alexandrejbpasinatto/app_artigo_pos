@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="templates/main.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="body">
+
+        <p:panel>
+            <h:form>
+
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+
+                        <p:commandButton title="novo animal" 
+                                         value="Novo Animal" 
+                                         icon="ui-icon-plus"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable var="animais"
+                             value="#{animalMB.animais}" 
+                             id="listAnimais"
+                             emptyMessage="Nenhum registro encontrado">
+
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{animais.id}"/>
+                    </p:column>
+                    <p:column headerText="Raça">
+                        <h:outputText value="#{animais.raca}"/>
+                    </p:column>
+                    <p:column headerText="Tipo Animal">
+                        <h:outputText value="#{animais.tipodoAnimal}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{animais.nome}"/>
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{animais.descricao}"/>
+                    </p:column>
+                    <p:column headerText="Foto">
+                        <p:graphicImage url="#{animais.foto}"/>
+                    </p:column>
+                    <!-- Regra, se adotado vincular pessoa
+                    <p:column headerText="Foto">
+                        <h:outputText value="#{animais.paraAdocao}"/>
+                    </p:column>-->
+
+                </p:dataTable>
+
+            </h:form>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+

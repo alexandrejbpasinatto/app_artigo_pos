@@ -19,7 +19,10 @@
                         <p:inputText value="#{usuarioMB.usuario.login}" id="Login"/>
 
                         <h:outputLabel for="Senha" value="Senha"/>
-                        <p:inputText value="#{usuarioMB.usuario.senha}" id="Senha"/>
+                        <p:password value="#{usuarioMB.usuario.senha}" id="Senha" 
+                                    promptLabel="Digite a senha" weakLabel="Força da senha : Fraca" 
+                                    goodLabel="Força da senha : Média" strongLabel="Força da senha : Forte"
+                                    feedback="true"/>
 
                         <p:commandButton value="Limpar" type="reset" />
                         <p:commandButton action="#{usuarioMB.salveOrUpdate()}" 
@@ -51,7 +54,7 @@
                         <h:outputText value="#{usuarios.login}"/>
                     </p:column>
                     <p:column headerText="Senha">
-                        <h:outputText value="#{usuarios.senha}"/>
+                        <h:outputText value="#{usuarios.senha}" />
                     </p:column>
 
                     <p:column style="width:32px">

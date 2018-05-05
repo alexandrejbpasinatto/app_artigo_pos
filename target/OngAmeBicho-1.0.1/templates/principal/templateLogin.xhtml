@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="Title">Login Sistema</ui:insert></title>
+    </h:head>
+    <h:body>
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="/templates/login/headerLogin.xhtml"/>
+            </ui:insert>
+        </div>
+
+        <div id="centro">
+            <p:layoutUnit position="center">
+                <ui:insert name="centro">
+                    <ui:include src=""/>
+                </ui:insert>
+            </p:layoutUnit>
+        </div>
+
+        <div id="footer">
+            <ui:insert name="footer">
+                <ui:include src="/templates/login/footerLogin.xhtml"/>
+            </ui:insert>
+        </div>
+    </h:body>
+</html>
+

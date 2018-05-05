@@ -18,20 +18,20 @@
 
                 <!--<h:outputText value="Efetue Login para acessar o sistema"/> 
                 <br/><br/>!-->
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                <p:messages id="messages"  autoUpdate="true" closable="true"/>
 
                 <h:panelGrid id="grid" columns="1" cellpadding="10">
                    
 
                     <h:panelGrid columns="3" cellpadding="5">
                         <p:outputLabel value="Usuario: "/>
-                        <p:inputText value="#{autenticadorBean.usuario.login}"/>
+                        <p:inputText value="#{loginMB.usuario.login}"/>
                         <!-- <br/><br/>-->
                         <p:outputLabel value="Senha: "/>
-                        <p:password value="#{autenticadorBean.usuario.senha}"/>
+                        <p:password value="#{loginMB.usuario.senha}"/>
                         <!-- <br/><br/>-->
 
-                        <p:commandButton value="Entrar" icon="ui-icon-gear" action="#{autenticadorBean.autentica()}"/>
+                        <p:commandButton value="Entrar" icon="ui-icon-gear" action="#{loginMB.efetuarLogin()}"/>
                     </h:panelGrid>
                 </h:panelGrid>
             </p:panel>

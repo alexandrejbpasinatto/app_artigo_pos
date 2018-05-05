@@ -43,8 +43,8 @@ public class UsuarioDao {
             conexao.fecharLigacao();
         }
     }
-    
-     public void updateUsuario(Usuario usuario) throws SQLException {
+
+    public void updateUsuario(Usuario usuario) throws SQLException {
         try {
             conexao.efetuaConexaoBD();
             PreparedStatement psi = conexao.con.prepareStatement(SqlHelper.updateUsuario);
@@ -81,7 +81,7 @@ public class UsuarioDao {
             conexao.fecharLigacao();
         }
     }
-    
+
     public Long getId() {
         try {
             Statement s = conexao.con.createStatement();
@@ -94,7 +94,7 @@ public class UsuarioDao {
     }
 
     public void delete(Usuario usuario) throws SQLException {
-         try {
+        try {
             conexao.efetuaConexaoBD();
             PreparedStatement psi = conexao.con.prepareStatement(SqlHelper.deleteUsuario);
             psi.setLong(1, usuario.getID());
@@ -107,7 +107,7 @@ public class UsuarioDao {
     }
 
     public Usuario verificaLoginESenha(Usuario usuario) throws SQLException {
-         try {
+        try {
             conexao.efetuaConexaoBD();
             PreparedStatement psi = conexao.con.prepareStatement(SqlHelper.verificaLogin);
             psi.setLong(1, getId());
@@ -119,19 +119,21 @@ public class UsuarioDao {
         }
         return usuario;
     }
-    
-    public Usuario getUsuario(String login, String senha) throws SQLException {
+
+    public boolean getUsuario(String login, String senha) throws SQLException {
         try {
             try {
                 PreparedStatement ps = conexao.con.prepareStatement(SqlHelper.verificaLogin);
                 ps.setString(1, login);
                 ps.setString(2, senha);
                 ResultSet rs = ps.executeQuery();
-                rs.next();
-                Usuario usu = new Usuario(
-                        rs.getString("USU_LOGIN"),
-                        rs.getString("USU_SENHA"));
-                return usu;
+                while (rs.next()) {
+                    Usuario usu = new Usuario(
+                            rs.getString("USU_LOGIN"),
+                            rs.getString("USU_SENHA"));
+                    return (usu.getLogin().equals(login)) && usu.getSenha().equals(senha);
+                }
+
             } catch (SQLException ex) {
                 conexao.fecharLigacao();
                 throw new RuntimeException("Erro ao buscar usuario !!!", ex);
@@ -139,5 +141,6 @@ public class UsuarioDao {
         } finally {
             conexao.fecharLigacao();
         }
+        return false;
     }
 }
