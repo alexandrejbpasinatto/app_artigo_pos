@@ -4,7 +4,7 @@
 
     <groupId>br.com.alexandre</groupId>
     <artifactId>OngAmeBicho</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>war</packaging>
 
     <name>OngAmeBicho</name>
@@ -20,27 +20,31 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <version>6.0</version>
             <scope>provided</scope>
         </dependency>
  
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
-            <version>3.0.6.Final</version>
+            <version>3.0.0.Final</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.6.Final</version>
+        <dependency> 
+            <groupId>org.jboss.resteasy</groupId> 
+            <artifactId>resteasy-jaxb-provider</artifactId> 
+            <version>3.0.0.Final</version> 
+        </dependency> 
+        <dependency> 
+            <groupId>org.jboss.resteasy</groupId> 
+            <artifactId>resteasy-jackson-provider</artifactId> 
+            <version>3.0.0.Final</version> 
         </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>3.0.6.Final</version>
+        <dependency> 
+            <groupId>org.jboss.resteasy</groupId> 
+            <artifactId>resteasy-cdi</artifactId> 
+            <version>3.0.0.Final</version> 
         </dependency>
+         
         <!-- end RestEasy -->
         
         <!-- Hibernate -->
@@ -76,7 +80,13 @@
             <artifactId>ui-lightness</artifactId>
             <version>1.0.10</version>
         </dependency>
+        <!-- end Prime Faces -->
         
+          <dependency>
+            <groupId>br.com.alexandre</groupId>
+            <artifactId>apiOng</artifactId>
+            <version>1.0.0</version>
+        </dependency>  
     </dependencies>
 
     <build>

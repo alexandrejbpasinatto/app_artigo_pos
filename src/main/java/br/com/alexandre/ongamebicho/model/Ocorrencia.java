@@ -6,41 +6,35 @@
 package br.com.alexandre.ongamebicho.model;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Alexandre
  */
-public class Ocorrencia implements Serializable{
-    
-    
-     private Long Id;
-     private String raca;
-     private String especie;
-     private String Observacao;
-     private byte[] Foto;
-     private String posicao;
+@XmlRootElement
+public class Ocorrencia implements Serializable {
 
-    public Ocorrencia(Long Id, String raca, String especie, String Observacao, byte[] Foto, String posicao) {
-        this.Id = Id;
-        this.raca = raca;
-        this.especie = especie;
-        this.Observacao = Observacao;
-        this.Foto = Foto;
-        this.posicao = posicao;
-    }
+    private Long id;
+
+    private String raca;
+
+    private String especie;
+
+    private String Observacao;
+
+    private byte[] Foto;
+
+    private String posicao;
 
     public Ocorrencia() {
     }
-    
-    
 
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long Id) {
-        this.Id = Id;
+    public Ocorrencia(Long id, String raca, String especie, String Observacao) {
+        this.id = id;
+        this.raca = raca;
+        this.especie = especie;
+        this.Observacao = Observacao;
     }
 
     public String getRaca() {
@@ -83,11 +77,17 @@ public class Ocorrencia implements Serializable{
         this.posicao = posicao;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "Ocorrencia{" + "Id=" + Id + ", raca=" + raca + ", especie=" + especie + ", Observacao=" + Observacao + ", Foto=" + Foto + ", posicao=" + posicao + '}';
+        return "Ocorrencia{" + "id=" + id + ", raca=" + raca + ", especie=" + especie + ", Observacao=" + Observacao + ", Foto=" + Foto + ", posicao=" + posicao + '}';
     }
-     
-     
-    
+
 }

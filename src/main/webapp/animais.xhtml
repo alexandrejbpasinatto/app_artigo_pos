@@ -13,7 +13,8 @@
 
                         <p:commandButton title="novo animal" 
                                          value="Novo Animal" 
-                                         icon="ui-icon-plus"/>
+                                         icon="ui-icon-plus"
+                                         action="#{animalMB.redireciona()}"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
@@ -28,7 +29,7 @@
                     <p:column headerText="Raça">
                         <h:outputText value="#{animais.raca}"/>
                     </p:column>
-                    <p:column headerText="Tipo Animal">
+                    <p:column headerText="Espécie">
                         <h:outputText value="#{animais.tipodoAnimal}"/>
                     </p:column>
                     <p:column headerText="Nome">
@@ -37,15 +38,66 @@
                     <p:column headerText="Descrição">
                         <h:outputText value="#{animais.descricao}"/>
                     </p:column>
-                    <p:column headerText="Foto">
-                        <p:graphicImage url="#{animais.foto}"/>
+                    <p:column headerText="Foto" style="width:40px">
+
+                        <p:commandButton image="ui-icon-search" title="Ver Imagens" action="#{galeriaBean.listaFotosEvento()}" onclick="PF('dlgGaleria').show();">
+                            <f:setPropertyActionListener target="#{galeriaBean.eventoSelecionado}" value="#{evento}"/>
+                        </p:commandButton>
                     </p:column>
+
+                    <p:column style="width:32px">
+                        <p:commandButton icon="ui-icon-closethick" 
+                                         action="#{animalMB.excluir(animais)}"
+                                         update="listAnimais" process="@this" >
+                            <p:confirm header="Deletar" 
+                                       message="Tem certeza que deseja excluir o registro?" 
+                                       icon="ui-icon-alert" />
+                            <p:ajax />
+                        </p:commandButton>
+                    </p:column>
+                    
+                     <p:column style="width:40px">
+                        <p:commandButton  icon="ui-icon-pencil" 
+                                          ajax="false"
+                                          action="animais_form"
+                                          >
+                            <f:setPropertyActionListener  target="#{animalMB.animal}" value="#{animais}" />
+                        </p:commandButton>
+                     </p:column>
                     <!-- Regra, se adotado vincular pessoa
                     <p:column headerText="Foto">
                         <h:outputText value="#{animais.paraAdocao}"/>
                     </p:column>-->
 
                 </p:dataTable>
+
+                <p:dialog id="dlgGaleria" widgetVar="dlgGaleria" modal="true" position="top"
+                          minWidth="440" minHeight="500">          
+                    <h:panelGrid columns="2"  id="dlgFotoDisplay">
+                        <h:outputText value="Nenhuma imagem encontrada" rendered="#{galeriaBean.fotos.size()==0}"/>
+                        <p:galleria value="#{galeriaBean.fotos}" 
+                                    var="galeria" effect="slide" effectSpeed="2000"                                                        
+                                    panelHeight="300" panelWidth="400"
+                                    frameHeight="100" frameWidth="100" 
+                                    >
+                            <p:graphicImage value="/temp/#{galeria.imagem}" cache="false" width="400" height="300"
+                                            title="#{galeria.imagem}" alt="#{galeria.descricao}"/>                                            
+
+
+                        </p:galleria>         
+                    </h:panelGrid>
+
+                </p:dialog>          
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sim" 
+                                     type="button" 
+                                     styleClass="ui-confirmdialog-yes" 
+                                     icon="ui-icon-check"/>
+                    <p:commandButton value="Não" type="button" 
+                                     styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close" />
+                </p:confirmDialog>
 
             </h:form>
         </p:panel>

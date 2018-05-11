@@ -5,9 +5,11 @@
  */
 package br.com.alexandre.ongamebicho.controller;
 
+import br.com.alexandre.apiong.dto.OcorrenciaDTO;
+import br.com.alexandre.apiong.dto.resource.OcorrenciaService;
+import br.com.alexandre.ongamebicho.business.OcorrenciaConverterDTO;
 import br.com.alexandre.ongamebicho.dao.OcorrenciaDao;
 import br.com.alexandre.ongamebicho.model.Ocorrencia;
-import br.com.alexandre.ongamebicho.service.OcorrenciaService;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +23,24 @@ import java.util.logging.Logger;
 public class OcorrenciaController implements OcorrenciaService{
     
     private OcorrenciaDao ocorrenciaDao = new OcorrenciaDao();
-    private Ocorrencia ocorrencia = new Ocorrencia();
+    private OcorrenciaDTO ocorrenciaDTO = new OcorrenciaDTO();
 
     @Override
-    public List<Ocorrencia> getAll() {
-       List<Ocorrencia> ocorrencias = new ArrayList<>();
-       ocorrencia.setEspecie("teste");
-       ocorrencias.add(ocorrencia);
+    public List<OcorrenciaDTO> getAll() {
+       List<OcorrenciaDTO> ocorrencias = new ArrayList<>();
+       ocorrenciaDTO.setEspecie("teste");
+       ocorrencias.add(ocorrenciaDTO);
        
        return ocorrencias;
     }
 
     @Override
-    public void Insert(Ocorrencia ocorrencia) {
+    public void insert(OcorrenciaDTO ocorrenciaDTO) {
+        Ocorrencia ocorrencia = OcorrenciaConverterDTO.converter(ocorrenciaDTO);
         try {
             ocorrenciaDao.save(ocorrencia);
         } catch (SQLException ex) {
-            Logger.getLogger(OcorrenciaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OcorrenciaController.class.getName()).log(Level.SEVERE, null, ex.getCause());
         }
     }
     

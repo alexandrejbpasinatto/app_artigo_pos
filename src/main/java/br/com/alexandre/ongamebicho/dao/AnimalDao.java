@@ -9,12 +9,14 @@ import br.com.alexandre.ongamebicho.conexao.Conexao;
 import br.com.alexandre.ongamebicho.conexao.HibernateUtil;
 import br.com.alexandre.ongamebicho.conexao.scripts.SqlHelper;
 import br.com.alexandre.ongamebicho.model.Animal;
+import br.com.alexandre.ongamebicho.model.Ocorrencia;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -69,6 +71,64 @@ public class AnimalDao {
                 conexao.fecharLigacao();
                 throw new RuntimeException("Erro ao buscar animal !!!", ex);
             }
+        } finally {
+            conexao.fecharLigacao();
+        }
+    }
+
+    public void insert(Animal animal) throws SQLException {
+         try {
+            conexao.efetuaConexaoBD();
+            PreparedStatement psi = conexao.con.prepareStatement(SqlHelper.insertAnimal);
+            psi.setLong(1, getId());
+            psi.setString(2, animal.getNome());
+            psi.setString(3, animal.getRaca());
+            psi.setString(4, animal.getTipodoAnimal());
+            psi.setString(5, animal.getDescricao());
+            psi.execute();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao inserir animal" + e.getMessage());
+        } finally {
+            conexao.fecharLigacao();
+        }
+    }
+    
+     public void update(Animal animal) throws SQLException {
+         try {
+            conexao.efetuaConexaoBD();
+            PreparedStatement psi = conexao.con.prepareStatement(SqlHelper.updateAnimal);
+            psi.setLong(1, animal.getId());
+            psi.setString(2, animal.getNome());
+            psi.setString(3, animal.getRaca());
+            psi.setString(4, animal.getTipodoAnimal());
+            psi.setString(5, animal.getDescricao());
+            psi.execute();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao atualizar animal" + e.getMessage());
+        } finally {
+            conexao.fecharLigacao();
+        }
+    }
+
+    public Long getId() {
+        try {
+            Statement s = conexao.con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT MAX(ID)+1 as id FROM animal");
+            rs.next();
+            return rs.getLong("id");
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao buscar id ", ex);
+        }
+    }
+
+    public void delete(Animal animal) throws SQLException {
+        try {
+            conexao.efetuaConexaoBD();
+            PreparedStatement psi = conexao.con.prepareStatement("DELETE FROM animal WHERE id = ?");
+            psi.setLong(1, animal.getId());
+            psi.execute();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar animal: " + e.getMessage());
         } finally {
             conexao.fecharLigacao();
         }

@@ -27,12 +27,24 @@ public class SqlHelper {
     public static String insertOcorrencia = "INSERT INTO WEB_OCORRENCIA "
             + "(ID,"
             + "OCO_RACA,"
-            + "OCO_ESPECIE),"
+            + "OCO_ESPECIE,"
             + "OCO_OBSERVACAO)"
             + " values (?,?,?,?)";
     
     public static String selectMaxIdOcorrencia = "SELECT MAX(ID)+1 as id FROM WEB_OCORRENCIA";
     public static String buscaOcorrencia = "SELECT * FROM WEB_OCORRENCIA";
+    public static String deleteOcorrencia = "DELETE FROM WEB_OCORRENCIA WHERE id = ?";
+    
+    
+     public static String insertAnimal = "INSERT INTO animal "
+            + "(ID,"
+            + "nome,"
+            + "raca,"
+            + "tipodoAnimal,"
+             + "descricao)"
+            + " values (?,?,?,?,?)";
+     
+     public static String updateAnimal = "UPDATE animal SET nome = ?, raca = ?, tipodoAnimal = ?, descricao = ? WHERE id = ?";
 }
 
 

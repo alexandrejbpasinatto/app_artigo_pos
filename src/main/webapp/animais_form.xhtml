@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" template="templates/main.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="body">
+
+        <p:panel>
+            <h:form id="frm">
+
+                <p:toolbar>
+                    <p:toolbarGroup align="left">
+                        <p:commandButton title="Voltar" value="Voltar" action="animais"
+                                         image="ui-icon ui-icon-arrowthick-1-w"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <h:panelGrid columns="2" id="animal">
+
+                    <h:outputLabel for="codigo" value="codigo"/>
+                    <h:inputHidden value="#{animalMB.animal.id}">
+                        <p:outputLabel value="#{animalMB.animal.id}" id="codigo"/>
+                    </h:inputHidden>
+                    
+                    <h:outputLabel for="nome" value="Nome"/>
+                    <p:inputText value="#{animalMB.animal.nome}" id="nome"/>
+
+                    <h:outputLabel for="raca" value="Raça"/>
+                    <p:inputText value="#{animalMB.animal.raca}" id="raca"/>
+
+                    <h:outputLabel for="especie" value="Especie"/>
+                    <p:inputText value="#{animalMB.animal.tipodoAnimal}" id="especie"/>
+
+                    <h:outputLabel for="observacao" value="Observações"/>
+                    <p:inputTextarea value="#{animalMB.animal.descricao}" id="observacao"/>
+
+
+                    <h:outputLabel for="imagem" value="Adicionar Foto"/>
+                    <p:commandButton image="ui-icon-plus" title="Adicionar Imagem" onclick="PF('dlgFoto').show();" update="">
+                        <f:setPropertyActionListener target="#{galeriaBean.eventoSelecionado}" value="#{evento}"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Limpar" type="reset" update="frm">
+                        <p:ajax update="frm" resetValues="true" />
+                    </p:commandButton>
+                    <p:commandButton action="#{animalMB.salveOrUpdate()}" 
+                                     value="Salvar" 
+                                     resetValues="true"
+                                     update="frm"/>
+                </h:panelGrid>
+
+                <p:dialog id="dlgFoto" position="top" widgetVar="dlgFoto" modal="true" minWidth="600" minHeight="500">                
+                    <p:fileUpload fileUploadListener="#{galeriaBean.enviaImagem}"                              
+                                  update="imagemTmp"
+                                  cancelLabel="Cancelar"
+                                  fileLimit="100000"
+                                  fileLimitMessage="Imagem muito grande"                               
+                                  label="Selecionar"
+                                  invalidFileMessage="Tipo de imagem inválido"
+                                  invalidSizeMessage="Imagem muito grande"
+                                  uploadLabel="Enviar"
+                                  allowTypes="/(\.|\/)(jpe?g|png)$/">
+
+                    </p:fileUpload>
+                    <p:outputPanel id="dadosFoto">
+                        <h:panelGrid>                        
+                            <p:graphicImage cache="false" id="imagemTmp" value="#{galeriaBean.imagem}" height="300" style="margin: 0 auto;"/>
+                            <h:outputText value="Descrição"/>
+                            <p:inputText value="#{galeriaBean.foto.descricao}" size="49"/>
+                            <h:outputText value="Ordem"/>
+                            <p:inputMask mask="9" value="#{galeriaBean.foto.ordem}" size="5"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                    <p:commandButton value="Adicionar"
+                                     update="frm"
+                                     oncomplete="PF('dlgFoto').hide();"/>                
+                </p:dialog>        
+            </h:form>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
+
